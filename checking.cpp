@@ -2,7 +2,6 @@
 
 using namespace std;
 
-// проверка ввода цифр в меню
 bool checkMenuCin(int choice) {
     if (choice < 1 || choice > 3) {
         setColor(0, 203);
@@ -87,7 +86,6 @@ int checkChange() {
             continue;
         }
 
-        // Проверка диапазона
         if ((value >= 1 && value <= 2) || value == 0 || value == 11) {
             return value;
         }
@@ -133,7 +131,6 @@ bool opportunityToPaste(int num, int x, int y, int(&a)[9][9]) {
     x -= 1;
     y -= 1;
 
-    // проверка того, что клетка пуста
     if (a[x][y] != 0) {
         empty++;
     }
@@ -184,30 +181,5 @@ bool opportunityToPaste(int num, int x, int y, int(&a)[9][9]) {
 }
 
 
-// canPlace ДЛЯ РЕШАТЕЛЯ
-bool canPlaceForSolve(int(&a)[9][9], int row, int col, int num) {
-    // Проверяем строку
-    for (int i = 0; i < 9; i++) {
-        if (i != col && a[row][i] == num) return false;
-    }
-
-    // Проверяем столбец
-    for (int i = 0; i < 9; i++) {
-        if (i != row && a[i][col] == num) return false;
-    }
-
-    // Проверяем квадрат 3x3
-    int startRow = row - row % 3;
-    int startCol = col - col % 3;
-    for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++) {
-            int r = i + startRow;
-            int c = j + startCol;
-            if (r != row && c != col && a[r][c] == num) return false;
-        }
-    }
-
-    return true;
-}
 
 
