@@ -116,7 +116,7 @@ void continueGame(int(&a)[9][9], string begin) {
     if (!isFieldOk(a)) {
         cout << endl;
         cout << setw(90) << "(' - ') ====== Поле заполнено неверно ====== (' - ')\n\n";
-        return;
+        return ;
     }
     if (!checkMatrix(a)) {
         cout << "\n" << setw(90) << "(^-^) ====== Ваше последнее судоку решено ====== (^-^)" << "\n\n";
