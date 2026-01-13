@@ -78,9 +78,7 @@ void playingField(int(&a)[9][9], int n, int m, int difficulty) {
     }
 }
 
-
 void solveSudoku(int(&a)[9][9]) {
-    // Сначала определяем, какие ячейки фиксированы
     bool fixed[9][9] = { false };
     for (int i = 0; i < 9; i++) {
         for (int j = 0; j < 9; j++) {
@@ -94,10 +92,8 @@ void solveSudoku(int(&a)[9][9]) {
     bool backtrack = false;
 
     while (row < 9) {
-        // Пропускаем фиксированные ячейки
         if (fixed[row][col]) {
             if (backtrack) {
-                // При backtrack идем назад через фиксированные ячейки
                 do {
                     if (col == 0) {
                         col = 8;
@@ -107,12 +103,11 @@ void solveSudoku(int(&a)[9][9]) {
                         col--;
                     }
                     if (row < 0) return;
-                } while (fixed[row][col]); // Пропускаем фиксированные
+                } while (fixed[row][col]); 
                 backtrack = true;
                 continue;
             }
             else {
-                // Идем вперед
                 col++;
                 if (col == 9) {
                     col = 0;
@@ -122,15 +117,13 @@ void solveSudoku(int(&a)[9][9]) {
             }
         }
 
-        // Только НЕфиксированные ячейки обрабатываем как переменные
         if (backtrack) {
             backtrack = false;
-            // Ищем предыдущую цифру для ЭТОЙ ячейки 
             int startNum = a[row][col] + 1;
             bool found = false;
 
             for (int num = startNum; num <= 9; num++) {
-                if (canPlaceForSolve(a, row, col, num)) {
+                if (canPlace(a, row, col, num)) {
                     a[row][col] = num;
                     found = true;
                     break;
@@ -138,9 +131,8 @@ void solveSudoku(int(&a)[9][9]) {
             }
 
             if (!found) {
-                a[row][col] = 0; // Сбрасываем нефиксированную ячейку
+                a[row][col] = 0; 
 
-                // Ищем предыдущую НЕфиксированную ячейку
                 do {
                     if (col == 0) {
                         col = 8;
@@ -150,17 +142,16 @@ void solveSudoku(int(&a)[9][9]) {
                         col--;
                     }
                     if (row < 0) return;
-                } while (fixed[row][col]); // Ищем только нефиксированные
+                } while (fixed[row][col]); 
 
                 backtrack = true;
                 continue;
             }
         }
         else if (a[row][col] == 0) {
-            // Новая нефиксированная ячейка
             bool found = false;
             for (int num = 1; num <= 9; num++) {
-                if (canPlaceForSolve(a, row, col, num)) {
+                if (canPlace(a, row, col, num)) {
                     a[row][col] = num;
                     found = true;
                     break;
@@ -168,10 +159,8 @@ void solveSudoku(int(&a)[9][9]) {
             }
 
             if (!found) {
-                // Не нашли - backtrack
                 a[row][col] = 0;
 
-                // Ищем предыдущую НЕфиксированную ячейку
                 do {
                     if (col == 0) {
                         col = 8;
@@ -188,7 +177,6 @@ void solveSudoku(int(&a)[9][9]) {
             }
         }
 
-        // идём вперед
         col++;
         if (col == 9) {
             col = 0;
@@ -215,7 +203,6 @@ void printField(int(&a)[9][9], string begin) {
     for (int i = 0; i < 9; i++) {
         int bigRow = i / 3;
 
-        // Горизонтальные разделители
         if (i % 3 == 0 && i != 0) {
             setColor(0, yellow);
             cout << setw(81) << "|-----------------------------------|" << endl;
@@ -233,7 +220,6 @@ void printField(int(&a)[9][9], string begin) {
             // Определяем фон: розовый для четных квадратов, черный для нечетных
             int bgColor = (squareNum % 2 == 0) ? purple : black;
 
-            // Ячейка с желтым текстом/символами
             setColor(bgColor, yellow);
 
             if (a[i][j] == 0) {
@@ -243,19 +229,16 @@ void printField(int(&a)[9][9], string begin) {
                 cout << " " << a[i][j] << " ";
             }
 
-            // Вертикальные разделители
             setColor(0, yellow);
             if (j < 8) {
                 cout << "|";
             }
         }
 
-        // Завершающая палочка
         setColor(0, yellow);
         cout << "|" << endl;
     }
 
-    // Нижняя граница
     setColor(0, yellow);
     cout << setw(80) << " -----------------------------------" << endl;
     resetColor();
