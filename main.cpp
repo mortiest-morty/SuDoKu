@@ -12,7 +12,7 @@ int main() {
     string begin = "(^-^) ====== S U D O K U ====== (^-^)";
     string continue_file, filename;
 
-    //printScreensaver();
+    printScreensaver();
 
     cout << endl;
 
